@@ -3,18 +3,23 @@ export class PageTrackerPlugin {
         this.api = api;
         this.storage = storage;
     }
-
     init() {
         const url = window.location.href;
         this.api.log("[PAGE TRACKER] Page loaded:", url);
-
-        const prev = this.storage.get("visited_pages") || [];
-        prev.push({ url, ts: Date.now() });
-
-        this.storage.set("visited_pages", prev);
+        const existing = sessionStorage.getItem("cf_visited_pages");
+        let pages = [];
+        if (existing) {
+            try {
+                pages = JSON.parse(existing);
+            } catch (e) {
+                console.warn("Failed to parse session storage.");
+            }
+        }
+        pages.push({url,ts: Date.now()});
+        sessionStorage.setItem("cf_visited_pages", JSON.stringify(pages));
+        console.log("[PAGE TRACKER] Visited Pages:", pages);
     }
-
     destroy() {
-        this.api.log("[PAGE TRACKER] Plugin destroyed");
+        console.log("[PAGE TRACKER] Plugin destroyed");
     }
 }

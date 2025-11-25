@@ -1,6 +1,7 @@
 export class PageTrackerPlugin {
-    constructor(api, storage) {
+    constructor(api, storage, meta) {
         this.api = api;
+        this.meta = meta;
         this.storage = storage;
         this.originalPushState = history.pushState;
         this.originalReplaceState = history.replaceState;

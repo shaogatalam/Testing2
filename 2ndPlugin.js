@@ -5,7 +5,7 @@ export class PageTrackerPlugin {
     }
     init() {
         const url = window.location.href;
-        this.api.log("[PAGE TRACKER] Page loaded:", url);
+        console.log("[PAGE TRACKER] Page loaded:", url);
         const existing = sessionStorage.getItem("cf_visited_pages");
         let pages = [];
         if (existing) {
